@@ -39,7 +39,7 @@ import android.util.Log;
  */
 public class NetworkService extends Service {
     private final IBinder mBinder = new NetworkBinder();
-    private int MAX_NUM_OF_CALLS = 6;
+    private int MAX_NUM_OF_CALLS = 8;
     private Queue<NetworkRequest> backlog;
     private List<NetworkRequest> currentlyRequesting;
 	private int readTimeoutTime = 20000;
@@ -50,7 +50,7 @@ public class NetworkService extends Service {
 	private enum RequestType { GET, POST, PUT, DELETE };
 	
 	public class NetworkBinder extends Binder {
-		NetworkService getService() {
+		public NetworkService getService() {
             return NetworkService.this;
         }
 		
@@ -66,7 +66,7 @@ public class NetworkService extends Service {
 	@Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         log("Started Network Service.");
-        return START_STICKY;
+        return START_REDELIVER_INTENT;
     }
 	
 	@Override
